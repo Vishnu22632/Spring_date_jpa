@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -124,5 +125,44 @@ class ProductRepositoryTest {
         Boolean isExist = productRepository.existsById(2L);
         System.out.println(isExist);
     }
+
+    @Test
+    public void findByPriceBetweenMethod(){
+        List<Product> products = productRepository.findByPriceBetween(new BigDecimal(12000), new BigDecimal(25000));
+
+        products.forEach((p)->{
+            System.out.println(p.getName() + " " + p.getPrice());
+        });
+
+    }
+
+    @Test
+    public void findByDateCreatedMethod(){
+        List<Product> products = productRepository.findByDateCreatedBetween(LocalDateTime.of(2025,9,11,16,58,13),LocalDateTime.of(2025,9,11,22,0,0) );
+
+        products.forEach((p)->{
+            System.out.println(p.getName());
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
