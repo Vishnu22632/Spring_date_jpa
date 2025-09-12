@@ -40,7 +40,11 @@ public class Product {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(name="des")
     private String description;
+
+    @Column(name="price")
     private BigDecimal price;
     private Boolean active;
     private String imageUrl;

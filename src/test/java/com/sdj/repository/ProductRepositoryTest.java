@@ -4,6 +4,7 @@ import com.sdj.entity.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -114,55 +115,50 @@ class ProductRepositoryTest {
 
     // count()
     @Test
-    public void countMethod(){
+    public void countMethod() {
         long productsCount = productRepository.count();
         System.out.println(productsCount);
     }
 
     // existById()
     @Test
-    public void existByIdMethod(){
+    public void existByIdMethod() {
         Boolean isExist = productRepository.existsById(2L);
         System.out.println(isExist);
     }
 
     @Test
-    public void findByPriceBetweenMethod(){
+    public void findByPriceBetweenMethod() {
         List<Product> products = productRepository.findByPriceBetween(new BigDecimal(12000), new BigDecimal(25000));
 
-        products.forEach((p)->{
+        products.forEach((p) -> {
             System.out.println(p.getName() + " " + p.getPrice());
         });
 
     }
 
     @Test
-    public void findByDateCreatedMethod(){
-        List<Product> products = productRepository.findByDateCreatedBetween(LocalDateTime.of(2025,9,11,16,58,13),LocalDateTime.of(2025,9,11,22,0,0) );
+    public void findByDateCreatedMethod() {
+        List<Product> products = productRepository.findByDateCreatedBetween(LocalDateTime.of(2025, 9, 11, 16, 58, 13), LocalDateTime.of(2025, 9, 11, 22, 0, 0));
 
-        products.forEach((p)->{
+        products.forEach((p) -> {
             System.out.println(p.getName());
         });
     }
 
 
+    @Test
+    public void sorting() {
+        String sortBy = "price";
+        String sortDir = "desc";
 
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
+        List<Product> products = productRepository.findAll(sort);
 
+        products.forEach((p) -> {
+            System.out.println(p);
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
